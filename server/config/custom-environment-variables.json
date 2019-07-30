@@ -1,0 +1,4 @@
+{
+    "jwtPrivateKey": "iReporter_privateKey",
+    "dbPrivateKey": "iReporter_dbPrivateKey"
+}

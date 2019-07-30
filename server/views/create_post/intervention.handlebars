@@ -1,0 +1,40 @@
+
+                <div class="create-flag">
+                    <div class="container1">
+                        <form class="form" method="POST" action="api/v1/record">
+                            <h2> Create Post </h2>
+                            <select name="" id="">
+                                <option value="Intervention">intervention</option>
+                                <option value="Redflag">Redflag</option>
+                            </select>
+                            <br>
+                            <br>
+                            <input type="text" id='title' name="title" placeholder="Title" required>
+                            <br>
+                            <textarea rows=5 cols=50 id='story' placeholder="Add story here" required></textarea>
+                            <br>
+                            <br>
+                            <small>Image</small>
+                            <input type="file" accept="image/*" name="image">
+                            <br>
+                            <br>
+                            <small>Video</small>
+                            <input type="file" accept="video/*" name="video">
+                            <br>
+                            <h3>Add location</h3>
+                            <div id="map"></div>
+                            <input type="text" name="longitude" placeholder="Longitude" id="lat" readonly="yes">
+                            <br>
+                            <input type="text" name="latitude" placeholder="Latitude" id="lng" readonly="yes">
+                            <br>
+                            <br>
+                                <input type="submit" id='iBtn' name="create" value="submit">
+                            <br>
+                        </form>
+                    </div>
+                </div>
+                    <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3a6RGsYSpUov6oNoHL909c_5gYS-99bA&callback=initMap">
+                    </script>
+                    <script type="text/javascript" src='../js/map.js'></script>
+                    <script type="text/javascript" src='../js/script.js'></script>

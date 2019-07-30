@@ -1,0 +1,64 @@
+language: node_js
+node_js:
+  - "node"
+
+branches:
+  only:
+  - api
+
+cache: npm
+env:
+  global:
+    - CC_TEST_REPORTER_ID=cb8ee60aa117bcc26e976124f5402dea10016ccd83f7667a8d380c71876af7e0
+    
+before_script:
+  - npm install
+  - npm install supertest
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+  - psql -c 'CREATE DATABASE IReporter;' -U postgres
+  - psql -c 'CREATE TABLE IF NOT EXISTS
+    users(
+        id SERIAL PRIMARY KEY,
+        firstname text,
+        lastname text,
+        othernames text,
+        email text UNIQUE NOT NULL,
+        username text UNIQUE NOT NULL,
+        phonenumber bigint,
+        registered date,
+        isadmin bool,
+        password text
+    );'
+  - psql -c 'CREATE TABLE IF NOT EXISTS
+    incidents(
+        id SERIAL PRIMARY KEY,
+        title text,
+        story text,
+        post_owner_id int,
+        type text,
+        latitude text,
+        longitude text,
+        created_on date,
+        created_by text,
+        images text,
+        videos text,
+        status text,
+        FOREIGN KEY (post_owner_id) REFERENCES users (id) ON DELETE CASCADE
+    );'
+
+script:
+ - npm run test
+
+services:
+  - postgresql
+  
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+after_success:
+ - npm install istanbul
+ - npm install coveralls
+ - npm run coveralls
+
